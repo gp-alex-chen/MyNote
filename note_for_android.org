@@ -1438,6 +1438,8 @@ where t2.mimetype_id=5;
   }
 #+END_SRC
 ** Service
+
+
 *** startService 管理 Service 的用法
 1. 创建Service子类，重写三个核心的生命周期方法和一个抽象方法
    1. OnCreate()
@@ -2159,8 +2161,6 @@ OverlayOptions 常用地图图层类
     }
 #+END_SRC
 
-*** TODO 地图检索
-表示是否首次定位
 
 ** Volley
 *** 初步操作
@@ -2460,7 +2460,7 @@ private Bitmap getBitmapUseOption(Bitmap ret, byte[] data) {
     }
 #+END_SRC
 
-** TODO 复杂的 ListView 应用
+** DONE 复杂的 ListView 应用
 *** 购物车
 #+BEGIN_QUOTE
 在一个购物车中，ListView 的每条内容都有可以点击的按钮，比如 增加或减少商品数量，点击图片进入详情页等等，这里就对这样复杂的 LstView 使用做一个笔记
@@ -2491,7 +2491,7 @@ private Bitmap getBitmapUseOption(Bitmap ret, byte[] data) {
 2. 充分使用 Android 组件的模式 Service ContentProvider Loader BroadcastRecevier
 3. 第三方框架的模式
 
-*** TODO 项目接口请求 Task 模式歩骤
+*** DONE 项目接口请求 Task 模式歩骤
 1. ClientAPI 实现网址的请求，提供参数的设置，返回结果
 2. Task 异步任务的定义 : 调用 ClientAPI
 3. 实体工具类 解析 JSON 数据
@@ -2499,6 +2499,277 @@ private Bitmap getBitmapUseOption(Bitmap ret, byte[] data) {
 5. UI 启动 Task
 6. 异步任务数据的接受， TaskCallback 实现
 
+** WindowManager
+*** Window 
+**** 作用
+1. 一个 Activity 就有一个 Window
+2. Window 是 Activity 显示内容的管理，用于管理实际显示的内容， Window 内部使用 DecorView 来描述 UI 的最顶级容器，就是一个 FrameLayout 的子类
+3. 所有 Activity 中 UI 相关的方法，都是 Window 来执行，调用内部的 DecorView 来完成
+4. Window 内部维护了当前的焦点，如果 Window 失去焦点，那么 Activity 将不可交互， Window 同时是事件传递的入口，由 Activity 把事件传递给 Window， Window 再把事件传递给 DecorView， 一直向下传递
+
+**** 调整屏幕亮度
+#+BEGIN_SRC java
+// 调整屏幕亮度
+ int id = seekBar.getId();
+ Window window = getWindow();
+ switch (id){
+     case R.id.brightness_bar:
+         WindowManager.LayoutParams layoutParams = window.getAttributes();
+         layoutParams.screenBrightness = (float) (progress * 0.01);
+         window.setAttributes(layoutParams);
+         break;
+ }
+#+END_SRC
+**** 总结
+Window 就是内部包裹了控件的一个组件，用于控制 UI 显示的位置，方式和效果
+*** WindowManager 
+**** 关于悬浮窗的泄漏
+1. 使用 Activity getWindowManager() 获取的 WindowManager 在添加悬浮窗的时候，默认这种悬浮窗，是无法单独在手机上存在的
+2. 悬浮窗在添加的时候，如果没有 LayoutParams type 参数，那么默认悬浮窗也是 Activity 级别的
+3. 当 Activity 退出的时候，这个级别的悬浮窗，必须经过 remove() 操作，使用 WindowManager 的 removeView()可以删除，释放悬浮窗
+**** DONE Activity 级别悬浮窗和 系统级别悬浮窗
+***** Activity 级别悬浮窗
+#+BEGIN_SRC java
+/**
+ * Activity 级别的悬浮窗  Activity 销毁悬浮窗消失
+ */
+public class GuardActivity extends AppCompatActivity {
+
+    private ImageView imageView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_guard);
+
+        // 1. 悬浮窗的显示方式 使用 WindowManager
+        WindowManager windowManager = getWindowManager();
+
+        // 2. 添加悬浮窗 WindowManager addView(View,LayoutParams);
+        // 2.1 准备 addView的参数1 View 对象
+        imageView = new ImageView(this);
+        imageView.setImageResource(R.mipmap.ic_launcher);
+        // 2.2 准备 addView 的参数2 WindowManager.LayoutParams
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        // 设置悬浮窗所在内容范围，左上到右下
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
+        // x,y 相对于 Gravity 的偏移
+        lp.x = -300;
+        lp.y = -300;
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        // 注意事项 : 悬浮窗通过 addView 之后， 如果悬浮窗View 可以获取焦点，那么底层的Activity 将接受不到任何为事件 包括返回
+        lp.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        // 设置悬浮窗中，没有内容的区域，显示为透明
+        lp.format = PixelFormat.TRANSPARENT;
+
+
+        windowManager.addView(imageView,lp);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        WindowManager windowManager = getWindowManager();
+        // 释放悬浮窗
+        windowManager.removeViewImmediate(imageView);
+    }
+}
+
+#+END_SRC
+***** 系统级别悬浮窗
+#+BEGIN_SRC java
+/**
+ * 系统悬浮窗，开启的悬浮窗可以在手机上单独显示
+ */
+public class SystemActivity extends AppCompatActivity  {
+
+    private static ImageView imageView;
+
+    private WindowManager.LayoutParams lp;
+
+    private WindowManager windowManager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_system);
+
+        // 歩骤
+        // 1. 使用系统级别的 WindowManager
+        windowManager = (WindowManager) getApplicationContext().getSystemService(WINDOW_SERVICE);
+
+        if (imageView != null) {
+            windowManager.removeViewImmediate(imageView);
+        }
+        // 2.1 使用 Application context 来创建 UI 控件
+        // 避免 Activity退出导致的 context 问题
+
+        imageView = new ImageView(getApplicationContext());
+        imageView.setImageResource(R.mipmap.ic_launcher);
+
+        // 2.2 设置参数 令悬浮窗在悬浮桌面上
+        lp = new WindowManager.LayoutParams();
+        // 系统级别需要指定 type 属性
+        // 对于应用程序使用的系统类型
+        // TYPE_SYSTEM_ALERT 允许接受事件
+        // TYPE_SYSTEM_OVERLAY 只是悬浮在系统上
+        lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+                | WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+
+        // 系统级别悬浮窗 比需要指定 NOT_FOCUSABLE
+        lp.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                // 允许用户手指点击悬浮窗之外的空间并且将事件向下传递
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+
+        lp.gravity = Gravity.LEFT | Gravity.TOP;
+        lp.x = 20;
+        lp.y = 20;
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.format = PixelFormat.TRANSPARENT;
+        // 2 addView
+        windowManager.addView(imageView, lp);
+
+        // 建议使用匿名内部类来设置监听器
+        imageView.setOnTouchListener(new View.OnTouchListener() {
+
+            private float lastX,lastY;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action){
+                    case MotionEvent.ACTION_DOWN:
+                        lastX = event.getRawX();
+                        lastY = event.getRawY();
+                        Log.d("action","DOWN");
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.d("action","MOVE");
+                        // 在移动的时候 获取屏幕上的事件点击位置进行增量计算，设置控件位置
+                        float cx = event.getRawX();
+                        float cy = event.getRawY();
+
+                        float dx = cx - lastX;
+                        float dy = cy - lastY;
+
+                        lp.x += dx;
+                        lp.y += dy;
+
+                        // 更新悬浮窗
+                        windowManager.updateViewLayout(imageView,lp);
+
+                        // 将当前坐标保存为 last
+                        lastX = cx;
+                        lastY = cy;
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.d("action","UP");
+                        break;
+                }
+
+
+                return false;
+            }
+        });
+
+
+    }
+
+
+}
+#+END_SRC
+**** 悬浮窗的拖拽
+基本算法： 使每两个点之间的距离增量移动
+*** Layoutparams 
+**** 一些属性
+- gravity
+- x,y,width,heirht
+- flags
+- format 用于控制悬浮窗显示内容中，通明部分改如何显示
+
+** PopupWindow
+#+BEGIN_QUOTE
+特点: 类似于 Activity 级别的悬浮窗，能够和指定的控件结合在一起，例如 Spinner。不需要计算坐标
+#+END_QUOTE
+*** 方法
+- showAsDropDown() 作为下拉
+- showAtLocation() 
+
+
+** Android 多媒体录制
+*** 知识点
+- 拍照
+- 录音
+- 录像
+*** 拍照
+**** 调用隐式意图启动
+**** Bitmap 转换成文件
+: Bitmap.compress(format,quality,stream);
+
+*** 声音的录制
+声音的录制使用 MediaRecorder 类来实现
+**** 录制歩骤
+1. 创建一个 MediaRecorder 的实例
+2. 使用 setAudioSource() 方法设置输入源
+3. setOutputFormat() 用来设置输出类型
+4. setOutputFile() 用来设置名字
+5. setAudioEncoder() 设置编码格式
+6. 调用 MediaRecorder 实例的 prepare()方法
+7. start() 方法开始
+8. stop() 方法结束
+9. 在程序销毁时调用一下 release() 方法。
+
+*** 录像
+#+BEGIN_SRC java
+if (!isRecording) {
+ // 1. 设置数如愿
+ // TODO 每一种输入源的特点
+ recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+
+ recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+ // 2. 设置生成的文件的格式
+ // mp4 文件格式
+ recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+
+ // 设置声音编码其
+ if (Build.VERSION.SDK_INT >= 16){
+     recorder.setAudioEncoder(MediaRecorder.AudioEncoder.HE_AAC);
+     recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+ }else if (Build.VERSION.SDK_INT >= 10){
+     recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+     recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+ }else {
+     recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+     recorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+ }
+ CamcorderProfile camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_2160P);
+
+ recorder.setAudioChannels(2);
+ recorder.setAudioEncodingBitRate(camcorderProfile.audioBitRate);
+
+ recorder.setVideoSize(camcorderProfile.videoFrameWidth, camcorderProfile.videoFrameHeight);
+ recorder.setOrientationHint(90);
+ recorder.setVideoFrameRate(camcorderProfile.videoFrameRate);
+ recorder.setVideoEncodingBitRate(camcorderProfile.videoBitRate);
+ //            recorder.setMaxDuration(100000);
+ // 设置录音要保存的位置
+ File folder = FileUtils.getMediaRecorderFolder(this);
+ File targetFile = new File(folder, "audio-" + System.currentTimeMillis() + ".mp4");
+ recorder.setOutputFile(targetFile.getAbsolutePath());
+ recorder.setPreviewDisplay(surfaceView.getHolder().getSurface());
+ try {
+     recorder.prepare();
+     recorder.start();
+ } catch (IOException e) {
+     e.printStackTrace();
+ }
+
+ isRecording = true;
+#+END_SRC
+*** 自定义照相机
 
 ** 关于 ScrollView + ListView
 1. 所有的容器在显示内容之前都需要进行排版，排版时需要获取内部子控件/子容器的尺寸
@@ -2510,57 +2781,7 @@ private Bitmap getBitmapUseOption(Bitmap ret, byte[] data) {
    ListView onMeasure 方法，检测模式如果时 UNSPECIFIED,永远只有一行
 
 
-
-** 打包、发布
-1. 经过大量的内部测试:开发人员自己测试，单元测试包括大量的功能测试、性能测试，与服务器联调(最好可以动态修改服务器位置)
-2. 软件包发布时，使用 Release 版本，需要进行软件测试，测试需要配置软件包 release 版本的数字签名
-3. KeyStore 文件: 内部包含了非对称加密的公钥和私钥，私钥用于对生成的 apk包进行数字签名，同时将公钥打包到 apk 文件中，形成数字签名的验证，使用公钥判断 apk 软件是否被非法修改过。
-4. 当 apk 数字签名验证通过，才可以安装到手机上，或者提交到应用市场中。
-5. 因为 apk 包中包含了 公钥(证书) 就包含了软件作者
-
-*** Gradle 对于数字签名的处理
-通常都是 release 版本才签名， debug 版本使用 android SDK 提供的debug.keystore 来签名
-
-歩骤
-- 准备 keystore 文件，如果公司有那么使用公司的，否则使用工具生成证书
-- 在模块的 build.gradle 中，来配置 keystore 的信息
-- build.gradle 为每一个应用程序发布的渠道进行签名 keystore 的设置
-
-针对以上歩骤详细解释如下
-**** 生成 keystore 文件
-示例
-在工程目录下进入 terminal 
-: keytool -genkeypair -alias alex_release -validity 10000 -keystore release.keystore -storepass 123456 -keypass 654321 
-
-**** 编译
-Gradle build
-
-**** gradle 的设置
-#+BEGIN_SRC java
-// 数字签名文件的配置,
-signingConfigs {
-        config {
-            keyAlias 'alex_release'
-            keyPassword '654321'
-            // 相对于当前目录
-            // 如果文件在 app 目录下 release.keystore
-            // 如果在上一级 ../release.keystore
-            storeFile file('/home/alex/AndroidStudioProjects/XmlyFM/release.keystore')
-            storePassword '123456'
-        }
-}
-
-#+END_SRC
-在android节点下
-#+BEGIN_SRC java
-    // 忽略一些不规范代码
-    lintOptions{
-        abortOnError false
-    }
-#+END_SRC
-
-*** Gradle 多渠道
-* 收藏的网页
+的网页
 ** 酷炫的 UI 效果
 https://github.com/wasabeef/awesome-android-ui
 

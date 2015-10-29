@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="note_for_android"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2015-10-19T11:03+0800"/>
+<meta name="generated" content="2015-10-26T10:33+0800"/>
 <meta name="author" content="alex"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -284,6 +284,10 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-23-1">23.1 图片的加载与显示</a></li>
 <li><a href="#sec-23-2">23.2 复杂的 ListView 应用</a></li>
+<li><a href="#sec-23-3">23.3 常见的 Android 开发模式</a></li>
+<li><a href="#sec-23-4">23.4 关于 ScrollView + ListView</a></li>
+<li><a href="#sec-23-5">23.5 打包、发布</a></li>
+<li><a href="#sec-23-6">23.6 查漏补缺</a></li>
 </ul>
 </li>
 <li><a href="#sec-24">24 收藏的网页</a>
@@ -295,11 +299,12 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#sec-25">25 常用工具类</a>
 <ul>
-<li><a href="#sec-25-1">25.1 HttpUtil</a></li>
-<li><a href="#sec-25-2">25.2 XmlPullParseUtil</a></li>
-<li><a href="#sec-25-3">25.3 JsonParseUtil</a></li>
-<li><a href="#sec-25-4">25.4 FileUtil</a></li>
-<li><a href="#sec-25-5">25.5 图片缓存 FileCache</a></li>
+<li><a href="#sec-25-1">25.1 json解析规则</a></li>
+<li><a href="#sec-25-2">25.2 HttpUtil</a></li>
+<li><a href="#sec-25-3">25.3 XmlPullParseUtil</a></li>
+<li><a href="#sec-25-4">25.4 JsonParseUtil</a></li>
+<li><a href="#sec-25-5">25.5 FileUtil</a></li>
+<li><a href="#sec-25-6">25.6 图片缓存 FileCache</a></li>
 </ul>
 </li>
 </ul>
@@ -594,14 +599,15 @@ setSelection(0,true);//让第一项被选中过
 <div class="outline-text-3" id="text-3-4">
 
 
+
 </div>
 
 <div id="outline-container-3-4-1" class="outline-4">
-<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> TextView</h4>
+<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> textview</h4>
 <div class="outline-text-4" id="text-3-4-1">
 
 <ul>
-<li>textSize:字体大小
+<li>textsize:字体大小
 </li>
 <li>textColor:颜色
 </li>
@@ -629,7 +635,7 @@ setSelection(0,true);//让第一项被选中过
 </div>
 
 <div id="outline-container-3-4-2" class="outline-4">
-<h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> Button</h4>
+<h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> button</h4>
 <div class="outline-text-4" id="text-3-4-2">
 
 <p>基本属性和 TextView 相同
@@ -649,7 +655,7 @@ OnClickedListener
 </div>
 
 <div id="outline-container-3-4-3" class="outline-4">
-<h4 id="sec-3-4-3"><span class="section-number-4">3.4.3</span> ToggleButton和Switch</h4>
+<h4 id="sec-3-4-3"><span class="section-number-4">3.4.3</span> togglebutton和Switch</h4>
 <div class="outline-text-4" id="text-3-4-3">
 
 <p>开关
@@ -681,6 +687,18 @@ OnClickedListener
 </ul>
 
 
+
+<ul>
+<li id="sec-3-4-4-1">scaleType<br/>
+<dl>
+<dt>centerCrop</dt><dd>以中心点为基准，等比缩放，以最短边填满 imageView 图片可能被截断
+</dd>
+<dt>centerInside</dt><dd>以中心点为基准，等比缩放，以最长边填充 imageView 图片会全部显示，只是可能占不满 imageView
+</dd>
+</dl>
+
+</li>
+</ul>
 </div>
 
 </div>
@@ -1989,7 +2007,6 @@ ListFragment 自带 ListView， 为了实现数据显示，还需要 一个<a hr
 </tbody>
 </table>
 
-
 </div>
 
 </div>
@@ -3229,6 +3246,8 @@ getContentResolver().delete(contactUri,<span style="color: #4E9A06;">"_id="</spa
 <div class="outline-text-3" id="text-17-3">
 
 
+
+
 </div>
 
 <div id="outline-container-17-3-1" class="outline-4">
@@ -3320,7 +3339,7 @@ stopService(intent);
 
 
 <pre class="src src-java"><span style="color: #F5666D;">@Override</span>
-    <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">IBinder</span> <span style="color: #00578E; font-weight: bold;">onBind</span>(<span style="color: #2F8B58; font-weight: bold;">Intent</span> <span style="color: #0084C8; font-weight: bold;">intent</span>) {
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">IBinder</span> <span style="color: #00578E; font-weight: bold;">onBind</span>(<span style="color: #2F8B58; font-weight: bold;">Intent</span> <span style="color: #0084C8; font-weight: bold;">intent</span>) {
         <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">TimerBinder</span>();
     }
 <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">TimerBinder</span> <span style="color: #A52A2A; font-weight: bold;">extends</span> <span style="color: #2F8B58; font-weight: bold;">Binder</span>{
@@ -4874,6 +4893,7 @@ fragment.java
 </ol>
 
 
+
 </div>
 </div>
 
@@ -4945,7 +4965,7 @@ Google 官方代码
 <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">loadBitmap</span>(<span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">resId</span>, <span style="color: #2F8B58; font-weight: bold;">ImageView</span> <span style="color: #0084C8; font-weight: bold;">imageView</span>) {
     <span style="color: #A52A2A; font-weight: bold;">if</span> (cancelPotentialWork(resId, imageView)) {
         <span style="color: #A52A2A; font-weight: bold;">final</span> <span style="color: #2F8B58; font-weight: bold;">BitmapWorkerTask</span> <span style="color: #0084C8; font-weight: bold;">task</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">BitmapWorkerTask</span>(imageView);
-        <span style="color: #A52A2A; font-weight: bold;">final</span> <span style="color: #2F8B58; font-weight: bold;">AsyncDrawable</span> <span style="color: #0084C8; font-weight: bold;">asyncDrawable</span> =
+        <span style="color: #A52A2A; font-weight: bold;">final</span> <span style="color: #2F8B58; font-weight: bold;">AsyncsDrawable</span> <span style="color: #0084C8; font-weight: bold;">asyncDrawable</span> =
                 <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">AsyncDrawable</span>(getResources(), mPlaceHolderBitmap, task);
         imageView.setImageDrawable(asyncDrawable);
         task.execute(resId);
@@ -5236,6 +5256,218 @@ descendantFocusability=“blockDescendants”
 <p>
 注册观察者使用 registerDataSetObserver
 </p>
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-23-3" class="outline-3">
+<h3 id="sec-23-3"><span class="section-number-3">23.3</span> 常见的 Android 开发模式</h3>
+<div class="outline-text-3" id="text-23-3">
+
+<ol>
+<li>异步任务回调
+</li>
+<li>充分使用 Android 组件的模式 Service ContentProvider Loader BroadcastRecevier
+</li>
+<li>第三方框架的模式
+</li>
+</ol>
+
+
+
+</div>
+
+<div id="outline-container-23-3-1" class="outline-4">
+<h4 id="sec-23-3-1"><span class="section-number-4">23.3.1</span> <span class="todo TODO">TODO</span> 项目接口请求 Task 模式歩骤</h4>
+<div class="outline-text-4" id="text-23-3-1">
+
+<ol>
+<li>ClientAPI 实现网址的请求，提供参数的设置，返回结果
+</li>
+<li>Task 异步任务的定义 : 调用 ClientAPI
+</li>
+<li>实体工具类 解析 JSON 数据
+</li>
+<li>Task 最终返回 TaskResult
+</li>
+<li>UI 启动 Task
+</li>
+<li>异步任务数据的接受， TaskCallback 实现
+</li>
+</ol>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-23-4" class="outline-3">
+<h3 id="sec-23-4"><span class="section-number-3">23.4</span> 关于 ScrollView + ListView</h3>
+<div class="outline-text-3" id="text-23-4">
+
+<ol>
+<li>所有的容器在显示内容之前都需要进行排版，排版时需要获取内部子控件/子容器的尺寸
+</li>
+<li>所有的 View 内部有一个回调方法， onMeasure 这个方法就是实际控件自身测量自己尺寸的方法；
+</li>
+<li>onMeasure 实际上就是控件自己算自己的尺寸
+</li>
+<li>当 ListView 被 ScrollView 包含的时候，那么 onMeasure方法接受的参数就有一些不同普通情况 wrap_content 会对应一个参数模式，称作 AT_MOST
+</li>
+<li>match_parent 对应 EXACTLY
+</li>
+<li>只有 ScrollView 内部控件进行尺寸计算(onMeasure)的时候，参数模式时 UNSPECIFIED
+   ListView onMeasure 方法，检测模式如果时 UNSPECIFIED,永远只有一行
+</li>
+</ol>
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-23-5" class="outline-3">
+<h3 id="sec-23-5"><span class="section-number-3">23.5</span> 打包、发布</h3>
+<div class="outline-text-3" id="text-23-5">
+
+<ol>
+<li>经过大量的内部测试:开发人员自己测试，单元测试包括大量的功能测试、性能测试，与服务器联调(最好可以动态修改服务器位置)
+</li>
+<li>软件包发布时，使用 Release 版本，需要进行软件测试，测试需要配置软件包 release 版本的数字签名
+</li>
+<li>KeyStore 文件: 内部包含了非对称加密的公钥和私钥，私钥用于对生成的 apk包进行数字签名，同时将公钥打包到 apk 文件中，形成数字签名的验证，使用公钥判断 apk 软件是否被非法修改过。
+</li>
+<li>当 apk 数字签名验证通过，才可以安装到手机上，或者提交到应用市场中。
+</li>
+<li>因为 apk 包中包含了 公钥(证书) 就包含了软件作者
+</li>
+</ol>
+
+
+
+</div>
+
+<div id="outline-container-23-5-1" class="outline-4">
+<h4 id="sec-23-5-1"><span class="section-number-4">23.5.1</span> Gradle 对于数字签名的处理</h4>
+<div class="outline-text-4" id="text-23-5-1">
+
+<p>通常都是 release 版本才签名， debug 版本使用 android SDK 提供的debug.keystore 来签名
+</p>
+<p>
+歩骤
+</p><ul>
+<li>准备 keystore 文件，如果公司有那么使用公司的，否则使用工具生成证书
+</li>
+<li>在模块的 build.gradle 中，来配置 keystore 的信息
+</li>
+<li>build.gradle 为每一个应用程序发布的渠道进行签名 keystore 的设置
+</li>
+</ul>
+
+
+<p>
+针对以上歩骤详细解释如下
+</p><ul>
+<li id="sec-23-5-1-1">生成 keystore 文件<br/>
+示例
+在工程目录下进入 terminal 
+<pre class="example">
+keytool -genkeypair -alias alex_release -validity 10000 -keystore release.keystore -storepass 123456 -keypass 654321 
+</pre>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-23-5-1-2">编译<br/>
+Gradle build
+
+</li>
+</ul>
+<ul>
+<li id="sec-23-5-1-3">gradle 的设置<br/>
+
+
+
+<pre class="src src-java"><span style="color: #204A87;">// </span><span style="color: #204A87;">&#25968;&#23383;&#31614;&#21517;&#25991;&#20214;&#30340;&#37197;&#32622;,</span>
+signingConfigs {
+        config {
+            keyAlias <span style="color: #4E9A06;">'alex_release'</span>
+            keyPassword <span style="color: #4E9A06;">'654321'</span>
+            <span style="color: #204A87;">// </span><span style="color: #204A87;">&#30456;&#23545;&#20110;&#24403;&#21069;&#30446;&#24405;</span>
+            <span style="color: #204A87;">// </span><span style="color: #204A87;">&#22914;&#26524;&#25991;&#20214;&#22312; app &#30446;&#24405;&#19979; release.keystore</span>
+            <span style="color: #204A87;">// </span><span style="color: #204A87;">&#22914;&#26524;&#22312;&#19978;&#19968;&#32423; ../release.keystore</span>
+            storeFile file(<span style="color: #4E9A06;">'/home/alex/AndroidStudioProjects/XmlyFM/release.keystore'</span>)
+            storePassword <span style="color: #4E9A06;">'123456'</span>
+        }
+}
+
+</pre>
+
+<p>
+在android节点下
+</p>
+
+
+<pre class="src src-java"><span style="color: #204A87;">// </span><span style="color: #204A87;">&#24573;&#30053;&#19968;&#20123;&#19981;&#35268;&#33539;&#20195;&#30721;</span>
+lintOptions{
+    abortOnError <span style="color: #F5666D;">false</span>
+}
+</pre>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-23-5-2" class="outline-4">
+<h4 id="sec-23-5-2"><span class="section-number-4">23.5.2</span> Gradle 多渠道</h4>
+<div class="outline-text-4" id="text-23-5-2">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-23-6" class="outline-3">
+<h3 id="sec-23-6"><span class="section-number-3">23.6</span> 查漏补缺</h3>
+<div class="outline-text-3" id="text-23-6">
+
+
+</div>
+
+<div id="outline-container-23-6-1" class="outline-4">
+<h4 id="sec-23-6-1"><span class="section-number-4">23.6.1</span> Service</h4>
+<div class="outline-text-4" id="text-23-6-1">
+
+<ul>
+<li id="sec-23-6-1-1">intent-filter 过滤意图<br/>
+</li>
+</ul>
+<ul>
+<li id="sec-23-6-1-2">Service 生命周期<br/>
+<ol>
+<li>onCreate() 在对象的存活期间，只执行一次，用于初始化数据与对象，通常都是启动线程，数据。
+</li>
+<li>onStartCommand(Intent , int flag, int id)
+
+<p>   
+   intent 用于传递参数
+</p></li>
+</ol>
+
 </li>
 </ul>
 </div>
@@ -5288,8 +5520,24 @@ descendantFocusability=“blockDescendants”
 </div>
 
 <div id="outline-container-25-1" class="outline-3">
-<h3 id="sec-25-1"><span class="section-number-3">25.1</span> HttpUtil</h3>
+<h3 id="sec-25-1"><span class="section-number-3">25.1</span> json解析规则</h3>
 <div class="outline-text-3" id="text-25-1">
+
+<ol>
+<li>必须区分出来那些可选那些不可选
+</li>
+<li>optXXXX(String key) 查找 JSON 对象中的字段
+</li>
+</ol>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-25-2" class="outline-3">
+<h3 id="sec-25-2"><span class="section-number-3">25.2</span> HttpUtil</h3>
+<div class="outline-text-3" id="text-25-2">
 
 
 
@@ -5334,9 +5582,9 @@ descendantFocusability=“blockDescendants”
 
 </div>
 
-<div id="outline-container-25-2" class="outline-3">
-<h3 id="sec-25-2"><span class="section-number-3">25.2</span> XmlPullParseUtil</h3>
-<div class="outline-text-3" id="text-25-2">
+<div id="outline-container-25-3" class="outline-3">
+<h3 id="sec-25-3"><span class="section-number-3">25.3</span> XmlPullParseUtil</h3>
+<div class="outline-text-3" id="text-25-3">
 
 
 
@@ -5426,9 +5674,9 @@ descendantFocusability=“blockDescendants”
 
 </div>
 
-<div id="outline-container-25-3" class="outline-3">
-<h3 id="sec-25-3"><span class="section-number-3">25.3</span> JsonParseUtil</h3>
-<div class="outline-text-3" id="text-25-3">
+<div id="outline-container-25-4" class="outline-3">
+<h3 id="sec-25-4"><span class="section-number-3">25.4</span> JsonParseUtil</h3>
+<div class="outline-text-3" id="text-25-4">
 
 
 
@@ -5482,9 +5730,9 @@ descendantFocusability=“blockDescendants”
 
 </div>
 
-<div id="outline-container-25-4" class="outline-3">
-<h3 id="sec-25-4"><span class="section-number-3">25.4</span> FileUtil</h3>
-<div class="outline-text-3" id="text-25-4">
+<div id="outline-container-25-5" class="outline-3">
+<h3 id="sec-25-5"><span class="section-number-3">25.5</span> FileUtil</h3>
+<div class="outline-text-3" id="text-25-5">
 
 <p>缓存图片的例子
 </p>
@@ -5556,9 +5804,9 @@ useLibrary "org.apache.http.legacy"
 
 </div>
 
-<div id="outline-container-25-5" class="outline-3">
-<h3 id="sec-25-5"><span class="section-number-3">25.5</span> 图片缓存 FileCache</h3>
-<div class="outline-text-3" id="text-25-5">
+<div id="outline-container-25-6" class="outline-3">
+<h3 id="sec-25-6"><span class="section-number-3">25.6</span> 图片缓存 FileCache</h3>
+<div class="outline-text-3" id="text-25-6">
 
 <p>FileCache.java
 </p>
@@ -5774,7 +6022,7 @@ useLibrary "org.apache.http.legacy"
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2015-10-19T11:03+0800</p>
+<p class="date">Date: 2015-10-26T10:33+0800</p>
 <p class="author">Author: alex</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
