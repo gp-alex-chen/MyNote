@@ -2708,7 +2708,109 @@ public class SystemActivity extends AppCompatActivity  {
 **** 调用隐式意图启动
 **** Bitmap 转换成文件
 : Bitmap.compress(format,quality,stream);
+**** 代码
+#+BEGIN_SRC java
+public class MainActivity extends AppCompatActivity {
 
+    private ImageView imageView;
+    private File targetFile;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = (ImageView) findViewById(R.id.image_view);
+    }
+
+    /**
+     * 拍照并且获取图片
+     * @param view
+     */
+    public void btnCamera(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,998);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 998){
+            if (resultCode == RESULT_OK){
+                if (data != null) {
+                    Bitmap bitmap = data.getParcelableExtra("data");
+                    imageView.setImageBitmap(bitmap);
+                    // Bitmap 转换成文件
+//                    bitmap.compress();
+                }
+            }
+        }else if (requestCode== 199){
+            Log.d("camera",requestCode+"");
+            if (resultCode == RESULT_OK){
+                if (targetFile != null && targetFile.exists()){
+                    BitmapFactory.Options opts = new BitmapFactory.Options();
+                    opts.inSampleSize = 2;
+                    Bitmap bitmap = BitmapFactory.decodeFile(targetFile.getAbsolutePath(),
+                            opts);
+                    imageView.setImageBitmap(bitmap);
+                }
+            }
+        }
+    }
+
+    /**
+     * 拍照并保存为图片文件，不会返回 Bitmap
+     * @param view
+     */
+    public void btnTakePhoneAndSave(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // 设置 EXTRA_OUTPUT 数值来指定保存的文件位置
+        targetFile = null;
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)){
+
+            // 获取 DCIM 文件目录
+            File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+
+            if (!directory.exists()){
+                // 因为公共拍照位置不存在
+                // 获取存储卡中的特定目录
+
+                directory = Environment.getExternalStorageDirectory();
+                directory = new File(directory,"MediaRecorder/Images");
+                if (!directory.exists()){
+                    directory.mkdirs();
+                }
+            }
+            // 最终目标文件的位置
+            targetFile = new File(directory,"Image-"+System.currentTimeMillis()+".jpeg");
+
+        }else {
+            // 内部存储区
+            File dir = getFilesDir();
+            targetFile = new File(dir,"Image-"+System.currentTimeMillis()+".jpeg");
+        }
+
+
+        Uri uri = Uri.fromFile(targetFile);// 图片存储的位置
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        startActivityForResult(intent, 199);
+
+    }
+
+
+    public void btnTakeVideo(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY,1);
+        startActivityForResult(intent,888);
+    }
+
+    public void btnJumpCamera(View view) {
+        Intent intent = new Intent(this,CameraActivity.class);
+        startActivity(intent);
+    }
+}
+#+END_SRC
 *** 声音的录制
 声音的录制使用 MediaRecorder 类来实现
 **** 录制歩骤
@@ -2770,6 +2872,169 @@ if (!isRecording) {
  isRecording = true;
 #+END_SRC
 *** 自定义照相机
+#+BEGIN_SRC java
+/**
+ * 自定义拍照功能，使用 android.hardware.Camera 类
+ */
+public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback, Camera.PictureCallback, Camera.PreviewCallback {
+
+    // 照相机 API
+    private Camera camera;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_camera);
+
+        // 1.获取 SurfaceView
+        SurfaceView preview = (SurfaceView) findViewById(R.id.preview_surface);
+
+        // 2. 要想使用 SurfaceView，就要用到 SurfaceHolder
+
+        SurfaceHolder holder = preview.getHolder();
+        // 3. 当 SurfaceView 准备好绘制的时候就可以回调设置的 Callback
+        holder.addCallback(this);
+
+
+    }
+
+    /**
+     * 当 SurfaceView 准备好，从屏幕上画划分出一块区域，回调这个方法，可以在这个方法绘制
+     * @param holder fan
+     */
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        // 1. 准备 camera
+        camera = Camera.open();
+        // 2. 开始预览
+        if (camera != null) {
+            try {
+                camera.setDisplayOrientation(90);
+                //获取当前照相机的参数信息，可以直接修改
+                Camera.Parameters parameters = camera.getParameters();
+                // 设置 jpeg 图片的质量 1-100
+                parameters.setJpegQuality(100);
+                // 旋转图像90度
+                parameters.setRotation(90);
+                // 颜色设置
+                parameters.setColorEffect(Camera.Parameters.EFFECT_NEGATIVE);
+
+                // 设置拍照图片像素存储的格式 对于 camera.takePicture 有影响
+                parameters.setPictureFormat(ImageFormat.JPEG);
+
+
+                camera.setParameters(parameters);
+                // 2.1 设置预览界面，通过 SurfaceHolder 来绘制 SurfaceView
+                camera.setPreviewDisplay(holder);
+                camera.setPreviewCallback(this);
+                // 2.2 开始预览
+                camera.startPreview();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    /**
+     * 当 SurfaceView 不再使用，屏幕区域被释放和销毁，不能再绘制了
+     * @param holder fan
+     */
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        if (camera != null) {
+            try {
+                camera.stopPreview();
+
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+            camera.release();
+        }
+    }
+
+    /**
+     * 按钮点击进行拍照
+     * @param view fan
+     */
+    public void btnTakePicture(View view) {
+        if (camera != null) {
+            // 拍照
+            camera.takePicture(
+                    null, // 快门
+                    null, // raw 模式数据回调
+                    this // PictureCallback 对应 JPEG 模式的数据
+            );
+
+        }
+    }
+
+    /**
+     * PictureCallback 的回调方法 用于接收数据
+     * @param data 对于 JPEG 模式，数据就是一个 JPEG 文件
+     * @param camera 相机
+     */
+    @Override
+    public void onPictureTaken(byte[] data, Camera camera) {
+        File imageFile = FileUtils.getImageFile(this);
+        try {
+            FileOutputStream fout = new FileOutputStream(imageFile);
+            fout.write(data);
+            fout.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 因为调用之后预览停止， 需要再次执行
+        camera.startPreview();
+    }
+
+    /**
+     * 预览中，刷新一帧回调一次，把内容存储data数组传给程序
+     * @param data
+     * @param camera
+     */
+    @Override
+    public void onPreviewFrame(byte[] data, Camera camera) {
+
+    }
+}
+
+#+END_SRC
+
+** TODO 传感器
+*** SensorManager 
+传感器管理器,所有的传感器，都通过 SensorManager 来管理和获取
+
+
+** webView
+webView 可以用来显示网页，加载方式有两种
+- 网址显示 ::  url
+- 源代码加载 :: 加载HTML的方式，通常都是客户端使用的形式，采用JSON内部包含 html 的方式的客户端
+- 完整的浏览器核心 :: Web APP
+*** 相关 API
+**** WebView
+包含了浏览网页功能
+**** WebViewClient
+网址加载处理器,可以拦截网址，让App去执行，其中的
+:: shouldOverrideUrlLoading 
+只有在网址加载中，并且不是 loadUrl 启动的时候，会进行拦截，例如网页内部点击超链接，或者重定向，才会进入这个方法。
+**** WebChromeClient
+侧重于 WebView 处理界面部分的功能,主要显示进度对话框，标题
+**** WebSettings
+WebView 的设置
+**** JS 的支持
+类和注解
+**** 说明
+1. WebView 实际上继承自 AbsoluteLayout，但是完全不支持 ViewGroup 的各种操作。
+2. WebView 内部的内容，不是控件，而是屏幕绘制出来的内容，其底层是由一个浏览器引擎：WebKit 来画出来的
+3. WebKit: 一套开源的，支持多平台的浏览器引擎，能够将网页用图像的形式绘制出来，同时支持 JavaScript 以及 HTML5 的各种规范。
 
 ** 关于 ScrollView + ListView
 1. 所有的容器在显示内容之前都需要进行排版，排版时需要获取内部子控件/子容器的尺寸
@@ -2789,6 +3054,8 @@ https://github.com/wasabeef/awesome-android-ui
 http://www.w3school.com.cn
 ** SQL
 http://sqlite.org/
+** Octave
+http://blog.gtwang.org/octave/getting-started-with-octave/
 * 常用<<工具类>>
 ** json解析规则
 1. 必须区分出来那些可选那些不可选

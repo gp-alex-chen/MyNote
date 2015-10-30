@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="note_for_android"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2015-10-26T10:33+0800"/>
+<meta name="generated" content="2015-10-29T13:35+0800"/>
 <meta name="author" content="alex"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -285,26 +285,23 @@ for the JavaScript code in this tag.
 <li><a href="#sec-23-1">23.1 图片的加载与显示</a></li>
 <li><a href="#sec-23-2">23.2 复杂的 ListView 应用</a></li>
 <li><a href="#sec-23-3">23.3 常见的 Android 开发模式</a></li>
-<li><a href="#sec-23-4">23.4 关于 ScrollView + ListView</a></li>
-<li><a href="#sec-23-5">23.5 打包、发布</a></li>
-<li><a href="#sec-23-6">23.6 查漏补缺</a></li>
+<li><a href="#sec-23-4">23.4 WindowManager</a></li>
+<li><a href="#sec-23-5">23.5 PopupWindow</a></li>
+<li><a href="#sec-23-6">23.6 Android 多媒体录制</a></li>
+<li><a href="#sec-23-7">23.7 关于 ScrollView + ListView</a></li>
+<li><a href="#sec-23-8">23.8 酷炫的 UI 效果</a></li>
+<li><a href="#sec-23-9">23.9 W3C</a></li>
+<li><a href="#sec-23-10">23.10 SQL</a></li>
 </ul>
 </li>
-<li><a href="#sec-24">24 收藏的网页</a>
+<li><a href="#sec-24">24 常用工具类</a>
 <ul>
-<li><a href="#sec-24-1">24.1 酷炫的 UI 效果</a></li>
-<li><a href="#sec-24-2">24.2 W3C</a></li>
-<li><a href="#sec-24-3">24.3 SQL</a></li>
-</ul>
-</li>
-<li><a href="#sec-25">25 常用工具类</a>
-<ul>
-<li><a href="#sec-25-1">25.1 json解析规则</a></li>
-<li><a href="#sec-25-2">25.2 HttpUtil</a></li>
-<li><a href="#sec-25-3">25.3 XmlPullParseUtil</a></li>
-<li><a href="#sec-25-4">25.4 JsonParseUtil</a></li>
-<li><a href="#sec-25-5">25.5 FileUtil</a></li>
-<li><a href="#sec-25-6">25.6 图片缓存 FileCache</a></li>
+<li><a href="#sec-24-1">24.1 json解析规则</a></li>
+<li><a href="#sec-24-2">24.2 HttpUtil</a></li>
+<li><a href="#sec-24-3">24.3 XmlPullParseUtil</a></li>
+<li><a href="#sec-24-4">24.4 JsonParseUtil</a></li>
+<li><a href="#sec-24-5">24.5 FileUtil</a></li>
+<li><a href="#sec-24-6">24.6 图片缓存 FileCache</a></li>
 </ul>
 </li>
 </ul>
@@ -1493,7 +1490,7 @@ fos.close();
 </div>
 
 <div id="outline-container-9-3-1" class="outline-4">
-<h4 id="sec-9-3-1"><span class="section-number-4">9.3.1</span> 扩展卡中文件操作的<a href="#sec-25">工具类</a></h4>
+<h4 id="sec-9-3-1"><span class="section-number-4">9.3.1</span> 扩展卡中文件操作的<a href="#sec-24">工具类</a></h4>
 <div class="outline-text-4" id="text-9-3-1">
 
 
@@ -4578,16 +4575,7 @@ MainActivity.java
 </pre>
 
 
-</div>
 
-</div>
-
-<div id="outline-container-21-2-3" class="outline-4">
-<h4 id="sec-21-2-3"><span class="section-number-4">21.2.3</span> <span class="todo TODO">TODO</span> 地图检索</h4>
-<div class="outline-text-4" id="text-21-2-3">
-
-<p>表示是否首次定位
-</p>
 </div>
 </div>
 
@@ -5196,7 +5184,7 @@ MD5 即 MessageDegist 消息摘要 第五版，
 </div>
 
 <div id="outline-container-23-2" class="outline-3">
-<h3 id="sec-23-2"><span class="section-number-3">23.2</span> <span class="todo TODO">TODO</span> 复杂的 ListView 应用</h3>
+<h3 id="sec-23-2"><span class="section-number-3">23.2</span> <span class="done DONE">DONE</span> 复杂的 ListView 应用</h3>
 <div class="outline-text-3" id="text-23-2">
 
 
@@ -5282,7 +5270,7 @@ descendantFocusability=“blockDescendants”
 </div>
 
 <div id="outline-container-23-3-1" class="outline-4">
-<h4 id="sec-23-3-1"><span class="section-number-4">23.3.1</span> <span class="todo TODO">TODO</span> 项目接口请求 Task 模式歩骤</h4>
+<h4 id="sec-23-3-1"><span class="section-number-4">23.3.1</span> <span class="done DONE">DONE</span> 项目接口请求 Task 模式歩骤</h4>
 <div class="outline-text-4" id="text-23-3-1">
 
 <ol>
@@ -5301,16 +5289,468 @@ descendantFocusability=“blockDescendants”
 </ol>
 
 
-
-
 </div>
 </div>
 
 </div>
 
 <div id="outline-container-23-4" class="outline-3">
-<h3 id="sec-23-4"><span class="section-number-3">23.4</span> 关于 ScrollView + ListView</h3>
+<h3 id="sec-23-4"><span class="section-number-3">23.4</span> WindowManager</h3>
 <div class="outline-text-3" id="text-23-4">
+
+
+</div>
+
+<div id="outline-container-23-4-1" class="outline-4">
+<h4 id="sec-23-4-1"><span class="section-number-4">23.4.1</span> Window</h4>
+<div class="outline-text-4" id="text-23-4-1">
+
+<ul>
+<li id="sec-23-4-1-1">作用<br/>
+<ol>
+<li>一个 Activity 就有一个 Window
+</li>
+<li>Window 是 Activity 显示内容的管理，用于管理实际显示的内容， Window 内部使用 DecorView 来描述 UI 的最顶级容器，就是一个 FrameLayout 的子类
+</li>
+<li>所有 Activity 中 UI 相关的方法，都是 Window 来执行，调用内部的 DecorView 来完成
+</li>
+<li>Window 内部维护了当前的焦点，如果 Window 失去焦点，那么 Activity 将不可交互， Window 同时是事件传递的入口，由 Activity 把事件传递给 Window， Window 再把事件传递给 DecorView， 一直向下传递
+</li>
+</ol>
+
+
+</li>
+</ul>
+<ul>
+<li id="sec-23-4-1-2">调整屏幕亮度<br/>
+
+
+
+<pre class="src src-java"><span style="color: #204A87;">// </span><span style="color: #204A87;">&#35843;&#25972;&#23631;&#24149;&#20142;&#24230;</span>
+ <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">id</span> = seekBar.getId();
+ <span style="color: #2F8B58; font-weight: bold;">Window</span> <span style="color: #0084C8; font-weight: bold;">window</span> = getWindow();
+ <span style="color: #A52A2A; font-weight: bold;">switch</span> (id){
+     <span style="color: #A52A2A; font-weight: bold;">case</span> R.id.brightness_bar:
+         <span style="color: #F5666D;">WindowManager</span>.<span style="color: #2F8B58; font-weight: bold;">LayoutParams</span> <span style="color: #0084C8; font-weight: bold;">layoutParams</span> = window.getAttributes();
+         layoutParams.screenBrightness = (<span style="color: #2F8B58; font-weight: bold;">float</span>) (progress * 0.01);
+         window.setAttributes(layoutParams);
+         <span style="color: #A52A2A; font-weight: bold;">break</span>;
+ }
+</pre>
+
+</li>
+</ul>
+<ul>
+<li id="sec-23-4-1-3">总结<br/>
+Window 就是内部包裹了控件的一个组件，用于控制 UI 显示的位置，方式和效果
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-23-4-2" class="outline-4">
+<h4 id="sec-23-4-2"><span class="section-number-4">23.4.2</span> WindowManager</h4>
+<div class="outline-text-4" id="text-23-4-2">
+
+<ul>
+<li id="sec-23-4-2-1">关于悬浮窗的泄漏<br/>
+<ol>
+<li>使用 Activity getWindowManager() 获取的 WindowManager 在添加悬浮窗的时候，默认这种悬浮窗，是无法单独在手机上存在的
+</li>
+<li>悬浮窗在添加的时候，如果没有 LayoutParams type 参数，那么默认悬浮窗也是 Activity 级别的
+</li>
+<li>当 Activity 退出的时候，这个级别的悬浮窗，必须经过 remove() 操作，使用 WindowManager 的 removeView()可以删除，释放悬浮窗
+</li>
+</ol>
+
+</li>
+</ul>
+<ul>
+<li id="sec-23-4-2-2"><span class="done DONE">DONE</span> Activity 级别悬浮窗和 系统级别悬浮窗<br/>
+<ul>
+<li id="sec-23-4-2-2-1">Activity 级别悬浮窗<br/>
+
+
+
+<pre class="src src-java"><span style="color: #4E9A06;">/**</span>
+<span style="color: #4E9A06;"> * Activity &#32423;&#21035;&#30340;&#24748;&#28014;&#31383;  Activity &#38144;&#27585;&#24748;&#28014;&#31383;&#28040;&#22833;</span>
+<span style="color: #4E9A06;"> */</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">GuardActivity</span> <span style="color: #A52A2A; font-weight: bold;">extends</span> <span style="color: #2F8B58; font-weight: bold;">AppCompatActivity</span> {
+
+    <span style="color: #A52A2A; font-weight: bold;">private</span> <span style="color: #2F8B58; font-weight: bold;">ImageView</span> <span style="color: #0084C8; font-weight: bold;">imageView</span>;
+
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">protected</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">onCreate</span>(<span style="color: #2F8B58; font-weight: bold;">Bundle</span> <span style="color: #0084C8; font-weight: bold;">savedInstanceState</span>) {
+        <span style="color: #A52A2A; font-weight: bold;">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_guard);
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">1. &#24748;&#28014;&#31383;&#30340;&#26174;&#31034;&#26041;&#24335; &#20351;&#29992; WindowManager</span>
+        <span style="color: #2F8B58; font-weight: bold;">WindowManager</span> <span style="color: #0084C8; font-weight: bold;">windowManager</span> = getWindowManager();
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">2. &#28155;&#21152;&#24748;&#28014;&#31383; WindowManager addView(View,LayoutParams);</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">2.1 &#20934;&#22791; addView&#30340;&#21442;&#25968;1 View &#23545;&#35937;</span>
+        imageView = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ImageView</span>(<span style="color: #A52A2A; font-weight: bold;">this</span>);
+        imageView.setImageResource(R.mipmap.ic_launcher);
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">2.2 &#20934;&#22791; addView &#30340;&#21442;&#25968;2 WindowManager.LayoutParams</span>
+        <span style="color: #F5666D;">WindowManager</span>.<span style="color: #2F8B58; font-weight: bold;">LayoutParams</span> <span style="color: #0084C8; font-weight: bold;">lp</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #F5666D;">WindowManager</span>.<span style="color: #2F8B58; font-weight: bold;">LayoutParams</span>();
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#35774;&#32622;&#24748;&#28014;&#31383;&#25152;&#22312;&#20869;&#23481;&#33539;&#22260;&#65292;&#24038;&#19978;&#21040;&#21491;&#19979;</span>
+        lp.gravity = <span style="color: #F5666D;">Gravity</span>.LEFT | <span style="color: #F5666D;">Gravity</span>.TOP;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">x,y &#30456;&#23545;&#20110; Gravity &#30340;&#20559;&#31227;</span>
+        lp.x = -300;
+        lp.y = -300;
+        lp.width = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.WRAP_CONTENT;
+        lp.height = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.WRAP_CONTENT;
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#27880;&#24847;&#20107;&#39033; : &#24748;&#28014;&#31383;&#36890;&#36807; addView &#20043;&#21518;&#65292; &#22914;&#26524;&#24748;&#28014;&#31383;View &#21487;&#20197;&#33719;&#21462;&#28966;&#28857;&#65292;&#37027;&#20040;&#24213;&#23618;&#30340;Activity &#23558;&#25509;&#21463;&#19981;&#21040;&#20219;&#20309;&#20026;&#20107;&#20214; &#21253;&#25324;&#36820;&#22238;</span>
+        lp.flags = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.FLAG_NOT_FOCUSABLE;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#35774;&#32622;&#24748;&#28014;&#31383;&#20013;&#65292;&#27809;&#26377;&#20869;&#23481;&#30340;&#21306;&#22495;&#65292;&#26174;&#31034;&#20026;&#36879;&#26126;</span>
+        lp.format = <span style="color: #F5666D;">PixelFormat</span>.TRANSPARENT;
+
+
+        windowManager.addView(imageView,lp);
+
+    }
+
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">protected</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">onDestroy</span>() {
+        <span style="color: #A52A2A; font-weight: bold;">super</span>.onDestroy();
+        <span style="color: #2F8B58; font-weight: bold;">WindowManager</span> <span style="color: #0084C8; font-weight: bold;">windowManager</span> = getWindowManager();
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#37322;&#25918;&#24748;&#28014;&#31383;</span>
+        windowManager.removeViewImmediate(imageView);
+    }
+}
+
+</pre>
+
+</li>
+</ul>
+<ul>
+<li id="sec-23-4-2-2-2">系统级别悬浮窗<br/>
+
+
+
+<pre class="src src-java"><span style="color: #4E9A06;">/**</span>
+<span style="color: #4E9A06;"> * &#31995;&#32479;&#24748;&#28014;&#31383;&#65292;&#24320;&#21551;&#30340;&#24748;&#28014;&#31383;&#21487;&#20197;&#22312;&#25163;&#26426;&#19978;&#21333;&#29420;&#26174;&#31034;</span>
+<span style="color: #4E9A06;"> */</span>
+<span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #A52A2A; font-weight: bold;">class</span> <span style="color: #2F8B58; font-weight: bold;">SystemActivity</span> <span style="color: #A52A2A; font-weight: bold;">extends</span> <span style="color: #2F8B58; font-weight: bold;">AppCompatActivity</span>  {
+
+    <span style="color: #A52A2A; font-weight: bold;">private</span> <span style="color: #A52A2A; font-weight: bold;">static</span> <span style="color: #2F8B58; font-weight: bold;">ImageView</span> <span style="color: #0084C8; font-weight: bold;">imageView</span>;
+
+    <span style="color: #A52A2A; font-weight: bold;">private</span> <span style="color: #F5666D;">WindowManager</span>.<span style="color: #2F8B58; font-weight: bold;">LayoutParams</span> <span style="color: #0084C8; font-weight: bold;">lp</span>;
+
+    <span style="color: #A52A2A; font-weight: bold;">private</span> <span style="color: #2F8B58; font-weight: bold;">WindowManager</span> <span style="color: #0084C8; font-weight: bold;">windowManager</span>;
+
+    <span style="color: #F5666D;">@Override</span>
+    <span style="color: #A52A2A; font-weight: bold;">protected</span> <span style="color: #2F8B58; font-weight: bold;">void</span> <span style="color: #00578E; font-weight: bold;">onCreate</span>(<span style="color: #2F8B58; font-weight: bold;">Bundle</span> <span style="color: #0084C8; font-weight: bold;">savedInstanceState</span>) {
+        <span style="color: #A52A2A; font-weight: bold;">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_system);
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#27497;&#39588;</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">1. &#20351;&#29992;&#31995;&#32479;&#32423;&#21035;&#30340; WindowManager</span>
+        windowManager = (<span style="color: #2F8B58; font-weight: bold;">WindowManager</span>) getApplicationContext().getSystemService(WINDOW_SERVICE);
+
+        <span style="color: #A52A2A; font-weight: bold;">if</span> (imageView != <span style="color: #F5666D;">null</span>) {
+            windowManager.removeViewImmediate(imageView);
+        }
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">2.1 &#20351;&#29992; Application context &#26469;&#21019;&#24314; UI &#25511;&#20214;</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#36991;&#20813; Activity&#36864;&#20986;&#23548;&#33268;&#30340; context &#38382;&#39064;</span>
+
+        imageView = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">ImageView</span>(getApplicationContext());
+        imageView.setImageResource(R.mipmap.ic_launcher);
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">2.2 &#35774;&#32622;&#21442;&#25968; &#20196;&#24748;&#28014;&#31383;&#22312;&#24748;&#28014;&#26700;&#38754;&#19978;</span>
+        lp = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #F5666D;">WindowManager</span>.<span style="color: #2F8B58; font-weight: bold;">LayoutParams</span>();
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#31995;&#32479;&#32423;&#21035;&#38656;&#35201;&#25351;&#23450; type &#23646;&#24615;</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#23545;&#20110;&#24212;&#29992;&#31243;&#24207;&#20351;&#29992;&#30340;&#31995;&#32479;&#31867;&#22411;</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">TYPE_SYSTEM_ALERT &#20801;&#35768;&#25509;&#21463;&#20107;&#20214;</span>
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">TYPE_SYSTEM_OVERLAY &#21482;&#26159;&#24748;&#28014;&#22312;&#31995;&#32479;&#19978;</span>
+        lp.type = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.TYPE_SYSTEM_ALERT
+                | <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.TYPE_SYSTEM_OVERLAY;
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#31995;&#32479;&#32423;&#21035;&#24748;&#28014;&#31383; &#27604;&#38656;&#35201;&#25351;&#23450; NOT_FOCUSABLE</span>
+        lp.flags = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.FLAG_NOT_FOCUSABLE
+                <span style="color: #204A87;">// </span><span style="color: #204A87;">&#20801;&#35768;&#29992;&#25143;&#25163;&#25351;&#28857;&#20987;&#24748;&#28014;&#31383;&#20043;&#22806;&#30340;&#31354;&#38388;&#24182;&#19988;&#23558;&#20107;&#20214;&#21521;&#19979;&#20256;&#36882;</span>
+                | <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.FLAG_NOT_TOUCH_MODAL;
+
+        lp.gravity = <span style="color: #F5666D;">Gravity</span>.LEFT | <span style="color: #F5666D;">Gravity</span>.TOP;
+        lp.x = 20;
+        lp.y = 20;
+        lp.width = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.WRAP_CONTENT;
+        lp.height = <span style="color: #F5666D;">WindowManager</span>.<span style="color: #F5666D;">LayoutParams</span>.WRAP_CONTENT;
+        lp.format = <span style="color: #F5666D;">PixelFormat</span>.TRANSPARENT;
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">2 addView</span>
+        windowManager.addView(imageView, lp);
+
+        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#24314;&#35758;&#20351;&#29992;&#21311;&#21517;&#20869;&#37096;&#31867;&#26469;&#35774;&#32622;&#30417;&#21548;&#22120;</span>
+        imageView.setOnTouchListener(<span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #F5666D;">View</span>.<span style="color: #2F8B58; font-weight: bold;">OnTouchListener</span>() {
+
+            <span style="color: #A52A2A; font-weight: bold;">private</span> <span style="color: #2F8B58; font-weight: bold;">float</span> <span style="color: #0084C8; font-weight: bold;">lastX</span>,<span style="color: #0084C8; font-weight: bold;">lastY</span>;
+            <span style="color: #F5666D;">@Override</span>
+            <span style="color: #A52A2A; font-weight: bold;">public</span> <span style="color: #2F8B58; font-weight: bold;">boolean</span> <span style="color: #00578E; font-weight: bold;">onTouch</span>(<span style="color: #2F8B58; font-weight: bold;">View</span> <span style="color: #0084C8; font-weight: bold;">v</span>, <span style="color: #2F8B58; font-weight: bold;">MotionEvent</span> <span style="color: #0084C8; font-weight: bold;">event</span>) {
+                <span style="color: #2F8B58; font-weight: bold;">int</span> <span style="color: #0084C8; font-weight: bold;">action</span> = event.getAction();
+                <span style="color: #A52A2A; font-weight: bold;">switch</span> (action){
+                    <span style="color: #A52A2A; font-weight: bold;">case</span> <span style="color: #F5666D;">MotionEvent</span>.ACTION_DOWN:
+                        lastX = event.getRawX();
+                        lastY = event.getRawY();
+                        Log.d(<span style="color: #4E9A06;">"action"</span>,<span style="color: #4E9A06;">"DOWN"</span>);
+                        <span style="color: #A52A2A; font-weight: bold;">break</span>;
+                    <span style="color: #A52A2A; font-weight: bold;">case</span> <span style="color: #F5666D;">MotionEvent</span>.ACTION_MOVE:
+                        Log.d(<span style="color: #4E9A06;">"action"</span>,<span style="color: #4E9A06;">"MOVE"</span>);
+                        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#22312;&#31227;&#21160;&#30340;&#26102;&#20505; &#33719;&#21462;&#23631;&#24149;&#19978;&#30340;&#20107;&#20214;&#28857;&#20987;&#20301;&#32622;&#36827;&#34892;&#22686;&#37327;&#35745;&#31639;&#65292;&#35774;&#32622;&#25511;&#20214;&#20301;&#32622;</span>
+                        <span style="color: #2F8B58; font-weight: bold;">float</span> <span style="color: #0084C8; font-weight: bold;">cx</span> = event.getRawX();
+                        <span style="color: #2F8B58; font-weight: bold;">float</span> <span style="color: #0084C8; font-weight: bold;">cy</span> = event.getRawY();
+
+                        <span style="color: #2F8B58; font-weight: bold;">float</span> <span style="color: #0084C8; font-weight: bold;">dx</span> = cx - lastX;
+                        <span style="color: #2F8B58; font-weight: bold;">float</span> <span style="color: #0084C8; font-weight: bold;">dy</span> = cy - lastY;
+
+                        lp.x += dx;
+                        lp.y += dy;
+
+                        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#26356;&#26032;&#24748;&#28014;&#31383;</span>
+                        windowManager.updateViewLayout(imageView,lp);
+
+                        <span style="color: #204A87;">// </span><span style="color: #204A87;">&#23558;&#24403;&#21069;&#22352;&#26631;&#20445;&#23384;&#20026; last</span>
+                        lastX = cx;
+                        lastY = cy;
+                        <span style="color: #A52A2A; font-weight: bold;">break</span>;
+                    <span style="color: #A52A2A; font-weight: bold;">case</span> <span style="color: #F5666D;">MotionEvent</span>.ACTION_UP:
+                        Log.d(<span style="color: #4E9A06;">"action"</span>,<span style="color: #4E9A06;">"UP"</span>);
+                        <span style="color: #A52A2A; font-weight: bold;">break</span>;
+                }
+
+
+                <span style="color: #A52A2A; font-weight: bold;">return</span> <span style="color: #F5666D;">false</span>;
+            }
+        });
+
+
+    }
+
+
+}
+</pre>
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li id="sec-23-4-2-3">悬浮窗的拖拽<br/>
+基本算法： 使每两个点之间的距离增量移动
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-23-4-3" class="outline-4">
+<h4 id="sec-23-4-3"><span class="section-number-4">23.4.3</span> Layoutparams</h4>
+<div class="outline-text-4" id="text-23-4-3">
+
+<ul>
+<li id="sec-23-4-3-1">一些属性<br/>
+<ul>
+<li>gravity
+</li>
+<li>x,y,width,heirht
+</li>
+<li>flags
+</li>
+<li>format 用于控制悬浮窗显示内容中，通明部分改如何显示
+</li>
+</ul>
+
+
+</li>
+</ul>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-23-5" class="outline-3">
+<h3 id="sec-23-5"><span class="section-number-3">23.5</span> PopupWindow</h3>
+<div class="outline-text-3" id="text-23-5">
+
+<blockquote>
+
+<p>特点: 类似于 Activity 级别的悬浮窗，能够和指定的控件结合在一起，例如 Spinner。不需要计算坐标
+</p>
+</blockquote>
+
+
+
+</div>
+
+<div id="outline-container-23-5-1" class="outline-4">
+<h4 id="sec-23-5-1"><span class="section-number-4">23.5.1</span> 方法</h4>
+<div class="outline-text-4" id="text-23-5-1">
+
+<ul>
+<li>showAsDropDown() 作为下拉
+</li>
+<li>showAtLocation() 
+</li>
+</ul>
+
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-23-6" class="outline-3">
+<h3 id="sec-23-6"><span class="section-number-3">23.6</span> Android 多媒体录制</h3>
+<div class="outline-text-3" id="text-23-6">
+
+
+</div>
+
+<div id="outline-container-23-6-1" class="outline-4">
+<h4 id="sec-23-6-1"><span class="section-number-4">23.6.1</span> 知识点</h4>
+<div class="outline-text-4" id="text-23-6-1">
+
+<ul>
+<li>拍照
+</li>
+<li>录音
+</li>
+<li>录像
+</li>
+</ul>
+
+</div>
+
+</div>
+
+<div id="outline-container-23-6-2" class="outline-4">
+<h4 id="sec-23-6-2"><span class="section-number-4">23.6.2</span> 拍照</h4>
+<div class="outline-text-4" id="text-23-6-2">
+
+<ul>
+<li id="sec-23-6-2-1">调用隐式意图启动<br/>
+</li>
+</ul>
+<ul>
+<li id="sec-23-6-2-2">Bitmap 转换成文件<br/>
+<pre class="example">
+Bitmap.compress(format,quality,stream);
+</pre>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-23-6-3" class="outline-4">
+<h4 id="sec-23-6-3"><span class="section-number-4">23.6.3</span> 声音的录制</h4>
+<div class="outline-text-4" id="text-23-6-3">
+
+<p>声音的录制使用 MediaRecorder 类来实现
+</p><ul>
+<li id="sec-23-6-3-1">录制歩骤<br/>
+<ol>
+<li>创建一个 MediaRecorder 的实例
+</li>
+<li>使用 setAudioSource() 方法设置输入源
+</li>
+<li>setOutputFormat() 用来设置输出类型
+</li>
+<li>setOutputFile() 用来设置名字
+</li>
+<li>setAudioEncoder() 设置编码格式
+</li>
+<li>调用 MediaRecorder 实例的 prepare()方法
+</li>
+<li>start() 方法开始
+</li>
+<li>stop() 方法结束
+</li>
+<li>在程序销毁时调用一下 release() 方法。
+</li>
+</ol>
+
+
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-23-6-4" class="outline-4">
+<h4 id="sec-23-6-4"><span class="section-number-4">23.6.4</span> 录像</h4>
+<div class="outline-text-4" id="text-23-6-4">
+
+
+
+
+<pre class="src src-java"><span style="color: #A52A2A; font-weight: bold;">if</span> (!isRecording) {
+ <span style="color: #204A87;">// </span><span style="color: #204A87;">1. &#35774;&#32622;&#25968;&#22914;&#24895;</span>
+ <span style="color: #204A87;">// </span><span style="color: #204A87;">TODO &#27599;&#19968;&#31181;&#36755;&#20837;&#28304;&#30340;&#29305;&#28857;</span>
+ recorder.setAudioSource(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">AudioSource</span>.MIC);
+
+ recorder.setVideoSource(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">VideoSource</span>.CAMERA);
+ <span style="color: #204A87;">// </span><span style="color: #204A87;">2. &#35774;&#32622;&#29983;&#25104;&#30340;&#25991;&#20214;&#30340;&#26684;&#24335;</span>
+ <span style="color: #204A87;">// </span><span style="color: #204A87;">mp4 &#25991;&#20214;&#26684;&#24335;</span>
+ recorder.setOutputFormat(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">OutputFormat</span>.MPEG_4);
+
+ <span style="color: #204A87;">// </span><span style="color: #204A87;">&#35774;&#32622;&#22768;&#38899;&#32534;&#30721;&#20854;</span>
+ <span style="color: #A52A2A; font-weight: bold;">if</span> (<span style="color: #F5666D;">Build</span>.<span style="color: #F5666D;">VERSION</span>.SDK_INT &gt;= 16){
+     recorder.setAudioEncoder(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">AudioEncoder</span>.HE_AAC);
+     recorder.setVideoEncoder(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">VideoEncoder</span>.H264);
+ }<span style="color: #A52A2A; font-weight: bold;">else</span> <span style="color: #A52A2A; font-weight: bold;">if</span> (<span style="color: #F5666D;">Build</span>.<span style="color: #F5666D;">VERSION</span>.SDK_INT &gt;= 10){
+     recorder.setAudioEncoder(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">AudioEncoder</span>.AAC);
+     recorder.setVideoEncoder(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">VideoEncoder</span>.H264);
+ }<span style="color: #A52A2A; font-weight: bold;">else</span> {
+     recorder.setAudioEncoder(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">AudioEncoder</span>.DEFAULT);
+     recorder.setVideoEncoder(<span style="color: #F5666D;">MediaRecorder</span>.<span style="color: #F5666D;">VideoEncoder</span>.H264);
+ }
+ <span style="color: #2F8B58; font-weight: bold;">CamcorderProfile</span> <span style="color: #0084C8; font-weight: bold;">camcorderProfile</span> = CamcorderProfile.get(<span style="color: #F5666D;">CamcorderProfile</span>.QUALITY_2160P);
+
+ recorder.setAudioChannels(2);
+ recorder.setAudioEncodingBitRate(camcorderProfile.audioBitRate);
+
+ recorder.setVideoSize(camcorderProfile.videoFrameWidth, camcorderProfile.videoFrameHeight);
+ recorder.setOrientationHint(90);
+ recorder.setVideoFrameRate(camcorderProfile.videoFrameRate);
+ recorder.setVideoEncodingBitRate(camcorderProfile.videoBitRate);
+ <span style="color: #204A87;">//            </span><span style="color: #204A87;">recorder.setMaxDuration(100000);</span>
+ <span style="color: #204A87;">// </span><span style="color: #204A87;">&#35774;&#32622;&#24405;&#38899;&#35201;&#20445;&#23384;&#30340;&#20301;&#32622;</span>
+ <span style="color: #2F8B58; font-weight: bold;">File</span> <span style="color: #0084C8; font-weight: bold;">folder</span> = FileUtils.getMediaRecorderFolder(<span style="color: #A52A2A; font-weight: bold;">this</span>);
+ <span style="color: #2F8B58; font-weight: bold;">File</span> <span style="color: #0084C8; font-weight: bold;">targetFile</span> = <span style="color: #A52A2A; font-weight: bold;">new</span> <span style="color: #2F8B58; font-weight: bold;">File</span>(folder, <span style="color: #4E9A06;">"audio-"</span> + System.currentTimeMillis() + <span style="color: #4E9A06;">".mp4"</span>);
+ recorder.setOutputFile(targetFile.getAbsolutePath());
+ recorder.setPreviewDisplay(surfaceView.getHolder().getSurface());
+ <span style="color: #A52A2A; font-weight: bold;">try</span> {
+     recorder.prepare();
+     recorder.start();
+ } <span style="color: #A52A2A; font-weight: bold;">catch</span> (<span style="color: #2F8B58; font-weight: bold;">IOException</span> <span style="color: #0084C8; font-weight: bold;">e</span>) {
+     e.printStackTrace();
+ }
+
+ isRecording = <span style="color: #F5666D;">true</span>;
+</pre>
+
+</div>
+
+</div>
+
+<div id="outline-container-23-6-5" class="outline-4">
+<h4 id="sec-23-6-5"><span class="section-number-4">23.6.5</span> 自定义照相机</h4>
+<div class="outline-text-4" id="text-23-6-5">
+
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-23-7" class="outline-3">
+<h3 id="sec-23-7"><span class="section-number-3">23.7</span> 关于 ScrollView + ListView</h3>
+<div class="outline-text-3" id="text-23-7">
 
 <ol>
 <li>所有的容器在显示内容之前都需要进行排版，排版时需要获取内部子控件/子容器的尺寸
@@ -5330,162 +5770,15 @@ descendantFocusability=“blockDescendants”
 
 
 
-
-</div>
-
-</div>
-
-<div id="outline-container-23-5" class="outline-3">
-<h3 id="sec-23-5"><span class="section-number-3">23.5</span> 打包、发布</h3>
-<div class="outline-text-3" id="text-23-5">
-
-<ol>
-<li>经过大量的内部测试:开发人员自己测试，单元测试包括大量的功能测试、性能测试，与服务器联调(最好可以动态修改服务器位置)
-</li>
-<li>软件包发布时，使用 Release 版本，需要进行软件测试，测试需要配置软件包 release 版本的数字签名
-</li>
-<li>KeyStore 文件: 内部包含了非对称加密的公钥和私钥，私钥用于对生成的 apk包进行数字签名，同时将公钥打包到 apk 文件中，形成数字签名的验证，使用公钥判断 apk 软件是否被非法修改过。
-</li>
-<li>当 apk 数字签名验证通过，才可以安装到手机上，或者提交到应用市场中。
-</li>
-<li>因为 apk 包中包含了 公钥(证书) 就包含了软件作者
-</li>
-</ol>
-
-
-
-</div>
-
-<div id="outline-container-23-5-1" class="outline-4">
-<h4 id="sec-23-5-1"><span class="section-number-4">23.5.1</span> Gradle 对于数字签名的处理</h4>
-<div class="outline-text-4" id="text-23-5-1">
-
-<p>通常都是 release 版本才签名， debug 版本使用 android SDK 提供的debug.keystore 来签名
-</p>
 <p>
-歩骤
-</p><ul>
-<li>准备 keystore 文件，如果公司有那么使用公司的，否则使用工具生成证书
-</li>
-<li>在模块的 build.gradle 中，来配置 keystore 的信息
-</li>
-<li>build.gradle 为每一个应用程序发布的渠道进行签名 keystore 的设置
-</li>
-</ul>
-
-
-<p>
-针对以上歩骤详细解释如下
-</p><ul>
-<li id="sec-23-5-1-1">生成 keystore 文件<br/>
-示例
-在工程目录下进入 terminal 
-<pre class="example">
-keytool -genkeypair -alias alex_release -validity 10000 -keystore release.keystore -storepass 123456 -keypass 654321 
-</pre>
-
-
-</li>
-</ul>
-<ul>
-<li id="sec-23-5-1-2">编译<br/>
-Gradle build
-
-</li>
-</ul>
-<ul>
-<li id="sec-23-5-1-3">gradle 的设置<br/>
-
-
-
-<pre class="src src-java"><span style="color: #204A87;">// </span><span style="color: #204A87;">&#25968;&#23383;&#31614;&#21517;&#25991;&#20214;&#30340;&#37197;&#32622;,</span>
-signingConfigs {
-        config {
-            keyAlias <span style="color: #4E9A06;">'alex_release'</span>
-            keyPassword <span style="color: #4E9A06;">'654321'</span>
-            <span style="color: #204A87;">// </span><span style="color: #204A87;">&#30456;&#23545;&#20110;&#24403;&#21069;&#30446;&#24405;</span>
-            <span style="color: #204A87;">// </span><span style="color: #204A87;">&#22914;&#26524;&#25991;&#20214;&#22312; app &#30446;&#24405;&#19979; release.keystore</span>
-            <span style="color: #204A87;">// </span><span style="color: #204A87;">&#22914;&#26524;&#22312;&#19978;&#19968;&#32423; ../release.keystore</span>
-            storeFile file(<span style="color: #4E9A06;">'/home/alex/AndroidStudioProjects/XmlyFM/release.keystore'</span>)
-            storePassword <span style="color: #4E9A06;">'123456'</span>
-        }
-}
-
-</pre>
-
-<p>
-在android节点下
-</p>
-
-
-<pre class="src src-java"><span style="color: #204A87;">// </span><span style="color: #204A87;">&#24573;&#30053;&#19968;&#20123;&#19981;&#35268;&#33539;&#20195;&#30721;</span>
-lintOptions{
-    abortOnError <span style="color: #F5666D;">false</span>
-}
-</pre>
-
-
-</li>
-</ul>
-</div>
+的网页
+</p></div>
 
 </div>
 
-<div id="outline-container-23-5-2" class="outline-4">
-<h4 id="sec-23-5-2"><span class="section-number-4">23.5.2</span> Gradle 多渠道</h4>
-<div class="outline-text-4" id="text-23-5-2">
-
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-23-6" class="outline-3">
-<h3 id="sec-23-6"><span class="section-number-3">23.6</span> 查漏补缺</h3>
-<div class="outline-text-3" id="text-23-6">
-
-
-</div>
-
-<div id="outline-container-23-6-1" class="outline-4">
-<h4 id="sec-23-6-1"><span class="section-number-4">23.6.1</span> Service</h4>
-<div class="outline-text-4" id="text-23-6-1">
-
-<ul>
-<li id="sec-23-6-1-1">intent-filter 过滤意图<br/>
-</li>
-</ul>
-<ul>
-<li id="sec-23-6-1-2">Service 生命周期<br/>
-<ol>
-<li>onCreate() 在对象的存活期间，只执行一次，用于初始化数据与对象，通常都是启动线程，数据。
-</li>
-<li>onStartCommand(Intent , int flag, int id)
-
-<p>   
-   intent 用于传递参数
-</p></li>
-</ol>
-
-</li>
-</ul>
-</div>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-24" class="outline-2">
-<h2 id="sec-24"><span class="section-number-2">24</span> 收藏的网页</h2>
-<div class="outline-text-2" id="text-24">
-
-
-</div>
-
-<div id="outline-container-24-1" class="outline-3">
-<h3 id="sec-24-1"><span class="section-number-3">24.1</span> 酷炫的 UI 效果</h3>
-<div class="outline-text-3" id="text-24-1">
+<div id="outline-container-23-8" class="outline-3">
+<h3 id="sec-23-8"><span class="section-number-3">23.8</span> 酷炫的 UI 效果</h3>
+<div class="outline-text-3" id="text-23-8">
 
 <p><a href="https://github.com/wasabeef/awesome-android-ui">https://github.com/wasabeef/awesome-android-ui</a>
 </p>
@@ -5493,18 +5786,18 @@ lintOptions{
 
 </div>
 
-<div id="outline-container-24-2" class="outline-3">
-<h3 id="sec-24-2"><span class="section-number-3">24.2</span> W3C</h3>
-<div class="outline-text-3" id="text-24-2">
+<div id="outline-container-23-9" class="outline-3">
+<h3 id="sec-23-9"><span class="section-number-3">23.9</span> W3C</h3>
+<div class="outline-text-3" id="text-23-9">
 
 <p><a href="http://www.w3school.com.cn">http://www.w3school.com.cn</a>
 </p></div>
 
 </div>
 
-<div id="outline-container-24-3" class="outline-3">
-<h3 id="sec-24-3"><span class="section-number-3">24.3</span> SQL</h3>
-<div class="outline-text-3" id="text-24-3">
+<div id="outline-container-23-10" class="outline-3">
+<h3 id="sec-23-10"><span class="section-number-3">23.10</span> SQL</h3>
+<div class="outline-text-3" id="text-23-10">
 
 <p><a href="http://sqlite.org/">http://sqlite.org/</a>
 </p></div>
@@ -5512,16 +5805,16 @@ lintOptions{
 
 </div>
 
-<div id="outline-container-25" class="outline-2">
-<h2 id="sec-25"><span class="section-number-2">25</span> 常用<span class="target">工具类</span></h2>
-<div class="outline-text-2" id="text-25">
+<div id="outline-container-24" class="outline-2">
+<h2 id="sec-24"><span class="section-number-2">24</span> 常用<span class="target">工具类</span></h2>
+<div class="outline-text-2" id="text-24">
 
 
 </div>
 
-<div id="outline-container-25-1" class="outline-3">
-<h3 id="sec-25-1"><span class="section-number-3">25.1</span> json解析规则</h3>
-<div class="outline-text-3" id="text-25-1">
+<div id="outline-container-24-1" class="outline-3">
+<h3 id="sec-24-1"><span class="section-number-3">24.1</span> json解析规则</h3>
+<div class="outline-text-3" id="text-24-1">
 
 <ol>
 <li>必须区分出来那些可选那些不可选
@@ -5535,9 +5828,9 @@ lintOptions{
 
 </div>
 
-<div id="outline-container-25-2" class="outline-3">
-<h3 id="sec-25-2"><span class="section-number-3">25.2</span> HttpUtil</h3>
-<div class="outline-text-3" id="text-25-2">
+<div id="outline-container-24-2" class="outline-3">
+<h3 id="sec-24-2"><span class="section-number-3">24.2</span> HttpUtil</h3>
+<div class="outline-text-3" id="text-24-2">
 
 
 
@@ -5582,9 +5875,9 @@ lintOptions{
 
 </div>
 
-<div id="outline-container-25-3" class="outline-3">
-<h3 id="sec-25-3"><span class="section-number-3">25.3</span> XmlPullParseUtil</h3>
-<div class="outline-text-3" id="text-25-3">
+<div id="outline-container-24-3" class="outline-3">
+<h3 id="sec-24-3"><span class="section-number-3">24.3</span> XmlPullParseUtil</h3>
+<div class="outline-text-3" id="text-24-3">
 
 
 
@@ -5674,9 +5967,9 @@ lintOptions{
 
 </div>
 
-<div id="outline-container-25-4" class="outline-3">
-<h3 id="sec-25-4"><span class="section-number-3">25.4</span> JsonParseUtil</h3>
-<div class="outline-text-3" id="text-25-4">
+<div id="outline-container-24-4" class="outline-3">
+<h3 id="sec-24-4"><span class="section-number-3">24.4</span> JsonParseUtil</h3>
+<div class="outline-text-3" id="text-24-4">
 
 
 
@@ -5730,9 +6023,9 @@ lintOptions{
 
 </div>
 
-<div id="outline-container-25-5" class="outline-3">
-<h3 id="sec-25-5"><span class="section-number-3">25.5</span> FileUtil</h3>
-<div class="outline-text-3" id="text-25-5">
+<div id="outline-container-24-5" class="outline-3">
+<h3 id="sec-24-5"><span class="section-number-3">24.5</span> FileUtil</h3>
+<div class="outline-text-3" id="text-24-5">
 
 <p>缓存图片的例子
 </p>
@@ -5804,9 +6097,9 @@ useLibrary "org.apache.http.legacy"
 
 </div>
 
-<div id="outline-container-25-6" class="outline-3">
-<h3 id="sec-25-6"><span class="section-number-3">25.6</span> 图片缓存 FileCache</h3>
-<div class="outline-text-3" id="text-25-6">
+<div id="outline-container-24-6" class="outline-3">
+<h3 id="sec-24-6"><span class="section-number-3">24.6</span> 图片缓存 FileCache</h3>
+<div class="outline-text-3" id="text-24-6">
 
 <p>FileCache.java
 </p>
@@ -6022,7 +6315,7 @@ useLibrary "org.apache.http.legacy"
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2015-10-26T10:33+0800</p>
+<p class="date">Date: 2015-10-29T13:35+0800</p>
 <p class="author">Author: alex</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
