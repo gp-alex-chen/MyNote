@@ -316,7 +316,9 @@ Notification 就是通知。
   toast.show();
 #+END_SRC
 
+#+BEGIN_SRC 
 
+#+END_SRC
 * <<Adapter>> 适配器
 ** ArrayAdapter
 一般步骤
@@ -612,6 +614,8 @@ public abstract class AbsAdapter<T> extends BaseAdapter {
 
 * <<Fragment>>
 可以当成 Activity 使用，但是 Fragment 是显示在 Activity 中的。
+1. 可以划分为模块
+Fragment 要尽可能的封装起来，并且 Fragment 之间的交互
 ** 如何开始
 新建一个继承 Fragment 的子类，重写 onCreateView 方法
 #+BEGIN_SRC java
@@ -793,7 +797,7 @@ private void abcd(String tag, Class<? extends Fragment> cls) {
     }
 #+END_SRC
 * Loaders 
-Loaders 令异步读取数据变得简单, Loaders 的一个特点就是可以在配置改变时重连.
+Loaders 令异步读取数据变得简单, Loaders 的一个特点就是生命周期和 Fragment 或者 Activity 同步，可以在配置改变时重连.
 ** Loader API Summary
 | Class/Interface               | Description                                      |
 |-------------------------------+--------------------------------------------------|
@@ -1273,7 +1277,7 @@ App 提供一个接口令外部 App 能够访问私有数据，需要使用 Cont
           String number = cursor.getString(1);
           long time = cursor.getLong(2);
           //转时间
-          String date = new SimpleDateFormat("YYYY-MM-dd E HH:mm:ss").format(new Date(time));
+         String date = new SimpleDateFormat("YYYY-MM-dd E HH:mm:ss").format(new Date(time));
           //1:拨入 2:拨出 3:未接
           int type = cursor.getInt(3);
           //定义一个存放信息的实体类 CallInfo
@@ -2255,6 +2259,7 @@ http://www.umeng.com
 http://www.mob.com
 
 *** 开发歩骤
+
 * IDEA
 ** 常见问题
 1. OLDER_SDK
@@ -2274,8 +2279,9 @@ http://www.mob.com
 4. 快速完成
    1. fori for循环的简写
 5. C+A+f 提出成成员变量
+   
 
-
+   
 * Android 高级课程
 ** 图片的加载与显示
 *** 图片错位的第二种处理办法
@@ -2683,6 +2689,38 @@ public class SystemActivity extends AppCompatActivity  {
 #+END_SRC
 **** 悬浮窗的拖拽
 基本算法： 使每两个点之间的距离增量移动
+**** 一个拖拽的例子
+#+BEGIN_SRC java
+@Override
+public boolean onTouch(View v, MotionEvent event) {
+
+    int action = event.getAction();
+    switch (action) {
+        case MotionEvent.ACTION_DOWN:
+            lastY = (int) event.getRawY();
+            break;
+        case MotionEvent.ACTION_MOVE:
+            int cy = (int) event.getRawY();
+            int dy = cy - lastY;
+
+            upMargin += dy;
+
+            if (upMargin >= 0){
+                upMargin = 0;
+            }else if (upMargin <= -buttonGo.getHeight()){
+                upMargin = -buttonGo.getHeight();
+            }
+            layoutParams.topMargin = upMargin;
+            headerLayout.setLayoutParams(layoutParams);
+
+            lastY = cy;
+            break;
+        case MotionEvent.ACTION_UP:
+            break;
+    }
+    return false;
+}
+#+END_SRC
 *** Layoutparams 
 **** 一些属性
 - gravity
@@ -3013,6 +3051,22 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 传感器管理器,所有的传感器，都通过 SensorManager 来管理和获取
 
 
+** Android 5 
+*** RecyclerView
+**** RecyclerView 特点
+1. 支持不同方向，不同排版模式，实现多种数据展现形式
+2. 内部实现回收机制，简化开发
+3. RecyclerView 不再包含 ListView 中的 setOnItemClickListener();
+   1. 需要针对 RecyclerView 内部的元素中的控件设置 onClickListener 的形式完成点击操作，
+   2. 需要给每一个点击的控件设置 onClickListener();
+**** RecyclerView 点击事件的支持
+因为 ViewHolder 每一次都需要重写，同时 ViewHodler 内部嫩能够通过 getAdapterPosition(), getLayoutPositon() 就可以获取当前 item 位置
+*** Palette
+**** API
+1. Palette.from(Bitmao) 准备处理 Bitmap
+2. Palette.Builder.generate() 同步方法,计算色系
+3. Palette.Builder.generate(Listener) 异步方法
+
 ** webView
 webView 可以用来显示网页，加载方式有两种
 - 网址显示 ::  url
@@ -3036,6 +3090,26 @@ WebView 的设置
 2. WebView 内部的内容，不是控件，而是屏幕绘制出来的内容，其底层是由一个浏览器引擎：WebKit 来画出来的
 3. WebKit: 一套开源的，支持多平台的浏览器引擎，能够将网页用图像的形式绘制出来，同时支持 JavaScript 以及 HTML5 的各种规范。
 
+
+** GitHub 团队协作
+
+
+** SVN
+*** 和 Git 的区别
+- SVN集中式版本控制
+- SVN 权限管理功能目前比 Git 多。
+- Git 可以通过设置公钥来省去密码输入问题
+*** SVN 应用歩骤
+仓库创建分为两种
+1. 一个仓库就是一个项目，在仓库内部可以放很多工程，相对简单
+2. 每一个仓库，在创间的时候默认创建三个文件夹 trunk(主干),branches(分支),tags(发布的版本代码不允许修改,相当于release版本)
+**** 目录结构 
+1. 全集中方式
+2. 全集中方式2
+3. 单一项目
+   一个项目一个仓库
+4. 单一项目带分支
+   有版本管理，一个项目配置一次
 ** 关于 ScrollView + ListView
 1. 所有的容器在显示内容之前都需要进行排版，排版时需要获取内部子控件/子容器的尺寸
 2. 所有的 View 内部有一个回调方法， onMeasure 这个方法就是实际控件自身测量自己尺寸的方法；
@@ -3047,14 +3121,16 @@ WebView 的设置
 
 
 的网页
-** 酷炫的 UI 效果
+
+** 有用的网址
+*** 酷炫的 UI 效果
 https://github.com/wasabeef/awesome-android-ui
 
-** W3C
+*** W3C
 http://www.w3school.com.cn
-** SQL
+*** SQL
 http://sqlite.org/
-** Octave
+*** Octave
 http://blog.gtwang.org/octave/getting-started-with-octave/
 * 常用<<工具类>>
 ** json解析规则
@@ -3293,6 +3369,49 @@ useLibrary "org.apache.http.legacy"
 
 
 
+
+** Post请求
+#+BEGIN_SRC java
+public static byte[] post(String url, byte[] data){
+        byte[] ret = null;
+        try {
+            URL u = new URL(url);
+            HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.connect();
+
+            if (data != null) {
+                OutputStream outputStream = conn.getOutputStream();
+                outputStream.write(data);
+            }
+
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == 200) {
+                InputStream inputStream = conn.getInputStream();
+                int len = 0;
+                byte[] buf = new byte[1024];
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                while ((len = inputStream.read(buf))!=-1){
+                    byteArrayOutputStream.write(buf,0,len);
+                }
+                ret = byteArrayOutputStream.toByteArray();
+
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return ret;
+    }
+
+#+END_SRC
 
 ** 图片缓存 FileCache
 FileCache.java
