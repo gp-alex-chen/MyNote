@@ -1,6 +1,5 @@
-#+STYLE: <link rel="stylesheet" type="text/css" href="http://orgmode.org/worg/worg.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="worg.css" />
 #+OPTIONS: ^:nil toc:2
-
 
 * emacs lisp 
 ** setq and setq-default 的区别
