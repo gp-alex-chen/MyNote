@@ -2,8 +2,87 @@
 #+OPTIONS: ^:nil toc:2
 
 
-* emacs
+* emacs lisp 
+** setq and setq-default 的区别
+Emacs 中有些变量是 ~buffer-local~ 修饰的, 这意味着每一个 buffer 都有一个对应的值, 那么 setq 修改的就是 buffer 对应的值, setq-default 修改的是全局的值
+** 不保留备份文件
+#+BEGIN_SRC emacs-lisp
+  (setq-default make-backup-files nil)
+#+END_SRC
+** 保持 org 语法高亮
+#+BEGIN_SRC emacs-lisp
+  (require 'org)
+  (setq org-src-fontify-natively t)
+#+END_SRC
+** 设置选词副高
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode t)
+#+END_SRC
+** add-hook 的作用
+*** 事例
+#+BEGIN_SRC emacs-lisp
+  ;; hook 就是钩子的意思, mains 打开 emacs-lisp-mode-hook 模式时 运行钩子, 而钩子添加了 show-paren-mode 
+  (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+#+END_SRC
+** 设置 elpa
+#+BEGIN_SRC emacs-lisp
+  (require 'cl)
+  (when (>= emacs-major-version 24)
+    (require 'package)
+    (package-initialize)
+    (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 
-* org-mode
 
-* elisp
+  (defvar alex-chen-packages '(
+                               auto-complete
+                               ) "Default packages")
+  (setq package-selected-packages alex-chen-packages)
+  (defun alex-chen-packages-installed-p ()
+    (loop for pkg alex-chen-packages
+          when (not (package-installed-p pkg)) do (return nil)
+          finally (return t)))
+  (unless (alex-chen-packages-installed-p)
+    (message "%s" "Refreshing package database...")
+    (package-refresh-contents)
+    (dolist (pkg alex-chen-packages)
+      (when (not (package-installed-p pkg))
+        (package-install pkg)))) 
+
+#+END_SRC
+** 设置缩写
+#+BEGIN_SRC emacs-lisp
+  (abbrev-mode t)
+  (define-abbrev-table 'global-abbrev-table '(
+                                              ;; 需要补全的内容
+                                              ("ac" "Alex-chen")
+                                              ))
+#+END_SRC
+** 一个 lisp 小例子(全文缩进的办法)
+全文缩进方法
+#+BEGIN_SRC emacs-lisp  (defun indent-buffer ()
+    (interactive)
+    (indent-region (point-min) (point-max)
+
+#+END_SRC
+** emacs 的目录 mode
+在目录 mode 下, 
+1. 按 ~+~ 号可以创建目录
+2. ~C-x C-f~ 来创建文件
+3. ~g~ 刷新
+4. ~C~ copy file
+5. ~d~ delete file
+6. ~R~ rename file
+7. ~x~ 执行标记
+** Org-mode 文学编程
+添加
+#+BEGIN_SRC emacs-lisp
+  (require 'org-install)
+  (require 'ob-tangle)
+  (org-babel-load-file (expand-file-name "alex-chen.org" user-emacs-directory))
+#+END_SRC
+
+随后将配置写入 alex-chen.org 文件中即可.
+
+ 
+
+
